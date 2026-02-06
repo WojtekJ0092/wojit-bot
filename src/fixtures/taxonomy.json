@@ -1,0 +1,5 @@
+{
+  "country": ["PL", "UK", "DE", "FR", "ES"],
+  "school_type": ["public", "private", "technical", "military", "SEN", "home", "christian"],
+  "cohort_year": [1, 2, 3, 4]
+}

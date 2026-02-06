@@ -1,0 +1,12 @@
+{
+  "blurred": false,
+  "disclaimer": null,
+  "answer": "Across Polish private Year 3 interviews, students say projects feel more purposeful than routine homework. Several mention that practical tasks help them understand the material better, while repetitive homework is seen as less motivating.",
+  "citations": [
+    { "chunk_id": "c_8f12", "ts_start": "00:08:17", "ts_end": "00:09:05" },
+    { "chunk_id": "c_a9de", "ts_start": "00:04:09", "ts_end": "00:04:55" }
+  ],
+  "evidence_count": 27,
+  "distinct_interviews": 12,
+  "confidence": 0.78
+}

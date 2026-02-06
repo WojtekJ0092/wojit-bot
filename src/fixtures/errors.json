@@ -1,0 +1,30 @@
+{
+  "cohort_too_small": {
+    "error": {
+      "code": "cohort_too_small",
+      "message": "The selected cohort is too small to guarantee anonymity. Please broaden your filters.",
+      "request_id": "00000000-0000-0000-0000-000000000001"
+    }
+  },
+  "consent_required": {
+    "error": {
+      "code": "consent_required",
+      "message": "Consent has not been granted for the requested data segment.",
+      "request_id": "00000000-0000-0000-0000-000000000002"
+    }
+  },
+  "insufficient_evidence": {
+    "error": {
+      "code": "insufficient_evidence",
+      "message": "Not enough evidence found to produce a reliable answer. Try broadening your filters.",
+      "request_id": "00000000-0000-0000-0000-000000000003"
+    }
+  },
+  "rate_limited": {
+    "error": {
+      "code": "rate_limited",
+      "message": "Too many requests. Please wait a moment and try again.",
+      "request_id": "00000000-0000-0000-0000-000000000004"
+    }
+  }
+}

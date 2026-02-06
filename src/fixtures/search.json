@@ -1,0 +1,28 @@
+{
+  "total_matches": 27,
+  "distinct_interviews": 12,
+  "items": [
+    {
+      "chunk_id": "c_8f12",
+      "snippet": "Projects feel meaningful; homework repeats the same pattern every week.",
+      "ts_start": "00:08:17",
+      "ts_end": "00:09:05",
+      "score": 0.83
+    },
+    {
+      "chunk_id": "c_a9de",
+      "snippet": "I prefer when we do something practical, not just answering questions from the textbook.",
+      "ts_start": "00:04:09",
+      "ts_end": "00:04:55",
+      "score": 0.79
+    },
+    {
+      "chunk_id": "c_b3f1",
+      "snippet": "Group projects are nice because you can share ideas and divide work.",
+      "ts_start": "00:12:30",
+      "ts_end": "00:13:10",
+      "score": 0.74
+    }
+  ],
+  "cursor": null
+}
