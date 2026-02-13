@@ -1,0 +1,123 @@
+[
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "Across Polish private Year 3 interviews, students say projects feel more purposeful than routine homework. Several mention that practical tasks help them understand the material better, while repetitive homework is seen as less motivating.",
+    "citations": [
+      { "chunk_id": "c_8f12", "ts_start": "00:08:17", "ts_end": "00:09:05" },
+      { "chunk_id": "c_a9de", "ts_start": "00:04:09", "ts_end": "00:04:55" }
+    ],
+    "evidence_count": 27,
+    "distinct_interviews": 12,
+    "confidence": 0.78
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "Students across multiple UK public schools describe a strong preference for collaborative learning. Group activities are seen as more engaging, though some quieter students express discomfort when forced to present in front of others.",
+    "citations": [
+      { "chunk_id": "c_d421", "ts_start": "00:02:30", "ts_end": "00:03:15" },
+      { "chunk_id": "c_e5f6", "ts_start": "00:11:44", "ts_end": "00:12:38" },
+      { "chunk_id": "c_77a3", "ts_start": "00:06:02", "ts_end": "00:06:50" }
+    ],
+    "evidence_count": 41,
+    "distinct_interviews": 18,
+    "confidence": 0.85
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "German technical school students frequently highlight the value of hands-on workshops over lecture-based instruction. Many report that they feel more confident applying skills learned in practical sessions compared to theory-heavy lessons.",
+    "citations": [
+      { "chunk_id": "c_1bc9", "ts_start": "00:15:20", "ts_end": "00:16:10" },
+      { "chunk_id": "c_3df0", "ts_start": "00:07:45", "ts_end": "00:08:30" }
+    ],
+    "evidence_count": 33,
+    "distinct_interviews": 15,
+    "confidence": 0.81
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "French Year 2 students describe mixed feelings about digital learning tools. While most appreciate interactive apps for language practice, a significant group finds screen time tiring and prefers physical textbooks for deeper reading.",
+    "citations": [
+      { "chunk_id": "c_4ae2", "ts_start": "00:03:55", "ts_end": "00:04:40" },
+      { "chunk_id": "c_5bf3", "ts_start": "00:09:12", "ts_end": "00:10:01" },
+      { "chunk_id": "c_6cg4", "ts_start": "00:14:28", "ts_end": "00:15:15" }
+    ],
+    "evidence_count": 22,
+    "distinct_interviews": 10,
+    "confidence": 0.73
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "Students in Spanish military schools consistently emphasise discipline and structure as key aspects of their experience. Most describe these as positive, though Year 1 students report an adjustment period during the first few months.",
+    "citations": [
+      { "chunk_id": "c_7dh5", "ts_start": "00:01:10", "ts_end": "00:02:05" },
+      { "chunk_id": "c_8ei6", "ts_start": "00:05:33", "ts_end": "00:06:20" }
+    ],
+    "evidence_count": 19,
+    "distinct_interviews": 8,
+    "confidence": 0.70
+  },
+  {
+    "blurred": true,
+    "disclaimer": "Few responses meet your filters; summary blends nearby data to protect anonymity.",
+    "answer": "Home-schooled students in the UK tend to value flexible schedules and personalised pacing. However, several express a desire for more social interaction and structured extracurricular activities.",
+    "citations": [],
+    "evidence_count": 5,
+    "distinct_interviews": 4,
+    "confidence": 0.55
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "Across Year 4 cohorts in Poland and Germany, students preparing for final exams report high stress levels. Common coping mechanisms include study groups, breaks with physical activity, and support from teachers who provide clear revision plans.",
+    "citations": [
+      { "chunk_id": "c_9fj7", "ts_start": "00:10:05", "ts_end": "00:11:00" },
+      { "chunk_id": "c_0gk8", "ts_start": "00:18:22", "ts_end": "00:19:15" },
+      { "chunk_id": "c_1hl9", "ts_start": "00:13:40", "ts_end": "00:14:30" }
+    ],
+    "evidence_count": 38,
+    "distinct_interviews": 16,
+    "confidence": 0.82
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "Christian school students across France and Spain frequently mention the role of community and shared values in shaping their school experience. Many describe a strong sense of belonging, while a few note tension between religious teachings and personal beliefs.",
+    "citations": [
+      { "chunk_id": "c_2im0", "ts_start": "00:06:50", "ts_end": "00:07:35" },
+      { "chunk_id": "c_3jn1", "ts_start": "00:20:10", "ts_end": "00:21:00" }
+    ],
+    "evidence_count": 24,
+    "distinct_interviews": 11,
+    "confidence": 0.76
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "SEN students in UK public schools express appreciation for one-on-one support from teaching assistants. Several highlight that smaller class sizes and adapted materials make a significant difference in their ability to engage with lessons.",
+    "citations": [
+      { "chunk_id": "c_4ko2", "ts_start": "00:08:55", "ts_end": "00:09:45" },
+      { "chunk_id": "c_5lp3", "ts_start": "00:16:30", "ts_end": "00:17:20" }
+    ],
+    "evidence_count": 15,
+    "distinct_interviews": 7,
+    "confidence": 0.68
+  },
+  {
+    "blurred": false,
+    "disclaimer": null,
+    "answer": "Year 1 students across all countries consistently describe feeling nervous about the transition from primary school. Key concerns include making new friends, navigating a larger campus, and dealing with increased academic expectations.",
+    "citations": [
+      { "chunk_id": "c_6mq4", "ts_start": "00:00:45", "ts_end": "00:01:30" },
+      { "chunk_id": "c_7nr5", "ts_start": "00:03:20", "ts_end": "00:04:10" },
+      { "chunk_id": "c_8os6", "ts_start": "00:22:05", "ts_end": "00:22:55" }
+    ],
+    "evidence_count": 52,
+    "distinct_interviews": 23,
+    "confidence": 0.89
+  }
+]

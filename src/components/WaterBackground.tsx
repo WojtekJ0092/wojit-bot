@@ -1,137 +1,53 @@
 // ---------------------------------------------------------------------------
-// WaterBackground — animated floating lines that bounce off UI elements
+// WaterBackground — mouse-interactive animated background
 // ---------------------------------------------------------------------------
 
 import { useEffect, useRef } from "react";
 
-interface Line {
+interface Particle {
   x: number;
   y: number;
+  baseX: number;
+  baseY: number;
   vx: number;
   vy: number;
-  len: number;
-  angle: number;
-  speed: number;
-  drift: number;
-  freq: number;
-  phase: number;
+  size: number;
   opacity: number;
-  width: number;
   color: string;
 }
 
-const LINE_COUNT = 40;
+interface Ripple {
+  x: number;
+  y: number;
+  radius: number;
+  maxRadius: number;
+  alpha: number;
+}
 
-const COLORS = [
-  "255, 255, 255", // white
-  "180, 180, 180", // light grey
-  "120, 120, 120", // mid grey
-  "80, 80, 80",    // dark grey
-  "0, 0, 0",       // black
-];
+const PARTICLE_COUNT = 80;
 
-const BOUNCE_PADDING = 20; // how far from text elements to start bouncing
-
-function createLine(w: number, h: number): Line {
-  const angle = Math.random() * Math.PI * 2;
-  const speed = 0.3 + Math.random() * 0.6;
+function createParticle(w: number, h: number): Particle {
+  const x = Math.random() * w;
+  const y = Math.random() * h;
+  const colors = ["#60a5fa", "#8b5cf6", "#a78bfa", "#c4b5fd", "#e0e7ff"];
   return {
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: Math.cos(angle) * speed,
-    vy: Math.sin(angle) * speed,
-    len: 80 + Math.random() * 200,
-    angle,
-    speed,
-    drift: 0.3 + Math.random() * 0.6,
-    freq: 0.002 + Math.random() * 0.004,
-    phase: Math.random() * Math.PI * 2,
-    opacity: 0.15 + Math.random() * 0.35,
-    width: 2 + Math.random() * 5,
-    color: COLORS[Math.floor(Math.random() * COLORS.length)]!,
+    x,
+    y,
+    baseX: x,
+    baseY: y,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    size: 2 + Math.random() * 3,
+    opacity: 0.3 + Math.random() * 0.5,
+    color: colors[Math.floor(Math.random() * colors.length)]!,
   };
-}
-
-/** Collect bounding rects for all UI text/interactive elements. */
-function getExclusionZones(): DOMRect[] {
-  const selectors = [
-    ".layout__header",
-    ".filter-bar",
-    ".chat-input",
-    ".answer-view",
-    ".sources-drawer",
-    ".error-banner",
-  ];
-  const rects: DOMRect[] = [];
-  for (const sel of selectors) {
-    const els = document.querySelectorAll(sel);
-    els.forEach((el) => {
-      const r = el.getBoundingClientRect();
-      // Expand the rect by padding
-      rects.push(
-        new DOMRect(
-          r.x - BOUNCE_PADDING,
-          r.y - BOUNCE_PADDING,
-          r.width + BOUNCE_PADDING * 2,
-          r.height + BOUNCE_PADDING * 2,
-        ),
-      );
-    });
-  }
-  return rects;
-}
-
-/** Check if a point is inside any exclusion zone, return the zone if so. */
-function hitTest(
-  px: number,
-  py: number,
-  zones: DOMRect[],
-): DOMRect | null {
-  for (const z of zones) {
-    if (px >= z.x && px <= z.x + z.width && py >= z.y && py <= z.y + z.height) {
-      return z;
-    }
-  }
-  return null;
-}
-
-/** Bounce a line smoothly off the nearest edge of an exclusion zone. */
-function bounce(line: Line, zone: DOMRect): void {
-  // Find distances to each edge
-  const dLeft = Math.abs(line.x - zone.x);
-  const dRight = Math.abs(line.x - (zone.x + zone.width));
-  const dTop = Math.abs(line.y - zone.y);
-  const dBottom = Math.abs(line.y - (zone.y + zone.height));
-
-  const minDist = Math.min(dLeft, dRight, dTop, dBottom);
-
-  if (minDist === dLeft) {
-    // Came from the left — push left, reflect vx
-    line.x = zone.x - 1;
-    if (line.vx > 0) line.vx = -line.vx;
-  } else if (minDist === dRight) {
-    // Came from the right — push right, reflect vx
-    line.x = zone.x + zone.width + 1;
-    if (line.vx < 0) line.vx = -line.vx;
-  } else if (minDist === dTop) {
-    // Came from the top — push up, reflect vy
-    line.y = zone.y - 1;
-    if (line.vy > 0) line.vy = -line.vy;
-  } else {
-    // Came from the bottom — push down, reflect vy
-    line.y = zone.y + zone.height + 1;
-    if (line.vy < 0) line.vy = -line.vy;
-  }
-
-  // Update angle to match new velocity
-  line.angle = Math.atan2(line.vy, line.vx);
 }
 
 export function WaterBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const linesRef = useRef<Line[]>([]);
   const rafRef = useRef<number>(0);
-  const zonesRef = useRef<DOMRect[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0, isMoving: false });
+  const ripplesRef = useRef<Ripple[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -139,102 +55,163 @@ export function WaterBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let particles: Particle[] = [];
+
     function resize() {
       if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      linesRef.current = Array.from({ length: LINE_COUNT }, () =>
-        createLine(canvas.width, canvas.height),
+      particles = Array.from({ length: PARTICLE_COUNT }, () =>
+        createParticle(canvas.width, canvas.height),
       );
     }
     resize();
     window.addEventListener("resize", resize);
 
+    // Mouse tracking
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let mouseTimeout: number | null = null;
+
+    function handleMouseMove(e: MouseEvent) {
+      const rect = canvas!.getBoundingClientRect();
+      mouseRef.current.x = e.clientX - rect.left;
+      mouseRef.current.y = e.clientY - rect.top;
+      mouseRef.current.isMoving = true;
+
+      // Create ripple if mouse moved significantly
+      const dx = mouseRef.current.x - lastMouseX;
+      const dy = mouseRef.current.y - lastMouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist > 15) {
+        ripplesRef.current.push({
+          x: mouseRef.current.x,
+          y: mouseRef.current.y,
+          radius: 0,
+          maxRadius: 100 + Math.random() * 50,
+          alpha: 0.6,
+        });
+        lastMouseX = mouseRef.current.x;
+        lastMouseY = mouseRef.current.y;
+      }
+
+      if (mouseTimeout) clearTimeout(mouseTimeout);
+      mouseTimeout = window.setTimeout(() => {
+        mouseRef.current.isMoving = false;
+      }, 100);
+    }
+
+    window.addEventListener("mousemove", handleMouseMove);
+
     let time = 0;
-    let zoneFrame = 0;
 
     function draw() {
       if (!ctx || !canvas) return;
+      const W = canvas.width;
+      const H = canvas.height;
       time += 1;
 
-      // Update exclusion zones every 10 frames for perf
-      if (zoneFrame % 10 === 0) {
-        zonesRef.current = getExclusionZones();
-      }
-      zoneFrame++;
+      ctx.clearRect(0, 0, W, H);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const zones = zonesRef.current;
+      const mouse = mouseRef.current;
 
-      for (const line of linesRef.current) {
-        // Gentle sinusoidal drift added to velocity
-        const wave = Math.sin(time * line.freq + line.phase) * line.drift * 0.15;
-        const wobble = Math.cos(time * line.freq * 0.7 + line.phase * 1.3) * line.drift * 0.1;
+      // Update and draw particles
+      for (const p of particles) {
+        // Gentle drift
+        p.baseX += p.vx;
+        p.baseY += p.vy;
 
-        line.x += line.vx + wave;
-        line.y += line.vy + wobble;
+        // Wrap around
+        if (p.baseX < 0) p.baseX = W;
+        if (p.baseX > W) p.baseX = 0;
+        if (p.baseY < 0) p.baseY = H;
+        if (p.baseY > H) p.baseY = 0;
 
-        // Gently rotate
-        line.angle += Math.sin(time * line.freq * 0.5 + line.phase) * 0.002;
+        // Mouse attraction/repulsion
+        const dx = mouse.x - p.baseX;
+        const dy = mouse.y - p.baseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
 
-        // Bounce off exclusion zones (check head and tail of line)
-        const headX = line.x + Math.cos(line.angle) * line.len;
-        const headY = line.y + Math.sin(line.angle) * line.len;
+        let offsetX = 0;
+        let offsetY = 0;
 
-        const hitBody = hitTest(line.x, line.y, zones);
-        if (hitBody) bounce(line, hitBody);
-
-        const hitHead = hitTest(headX, headY, zones);
-        if (hitHead) bounce(line, hitHead);
-
-        // Also check midpoint
-        const midX = (line.x + headX) / 2;
-        const midY = (line.y + headY) / 2;
-        const hitMid = hitTest(midX, midY, zones);
-        if (hitMid) bounce(line, hitMid);
-
-        // Wrap around screen edges
-        if (line.x < -line.len) line.x = canvas.width + line.len;
-        if (line.x > canvas.width + line.len) line.x = -line.len;
-        if (line.y < -line.len) line.y = canvas.height + line.len;
-        if (line.y > canvas.height + line.len) line.y = -line.len;
-
-        // Dampen speed slightly to keep things smooth
-        const currentSpeed = Math.sqrt(line.vx * line.vx + line.vy * line.vy);
-        if (currentSpeed > line.speed * 2) {
-          line.vx *= 0.98;
-          line.vy *= 0.98;
+        if (mouse.isMoving && dist < 150) {
+          const force = (150 - dist) / 150;
+          offsetX = (dx / dist) * force * 40;
+          offsetY = (dy / dist) * force * 40;
         }
 
-        // Draw the line with wavy distortion
-        const segments = 12;
-        ctx.beginPath();
-        for (let i = 0; i <= segments; i++) {
-          const t = i / segments;
-          const baseX = line.x + Math.cos(line.angle) * line.len * t;
-          const baseY = line.y + Math.sin(line.angle) * line.len * t;
-          const perpAngle = line.angle + Math.PI / 2;
-          const waveOffset =
-            Math.sin(t * Math.PI * 2 + time * line.freq * 3 + line.phase) *
-            8 *
-            line.drift;
-          const px = baseX + Math.cos(perpAngle) * waveOffset;
-          const py = baseY + Math.sin(perpAngle) * waveOffset;
+        p.x = p.baseX + offsetX;
+        p.y = p.baseY + offsetY;
 
-          if (i === 0) {
-            ctx.moveTo(px, py);
-          } else {
-            ctx.lineTo(px, py);
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fill();
+
+        // Draw connection lines to nearby particles
+        for (const other of particles) {
+          if (other === p) continue;
+          const dx2 = p.x - other.x;
+          const dy2 = p.y - other.y;
+          const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+
+          if (dist2 < 80) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(other.x, other.y);
+            ctx.strokeStyle = p.color;
+            ctx.globalAlpha = (1 - dist2 / 80) * 0.15;
+            ctx.lineWidth = 1;
+            ctx.stroke();
           }
         }
-
-        // Pulsing opacity
-        const pulse = 0.7 + 0.3 * Math.sin(time * line.freq * 2 + line.phase);
-        ctx.strokeStyle = `rgba(${line.color}, ${line.opacity * pulse})`;
-        ctx.lineWidth = line.width;
-        ctx.lineCap = "butt";
-        ctx.stroke();
       }
+
+      ctx.globalAlpha = 1;
+
+      // Draw mouse glow
+      if (mouse.isMoving) {
+        const glowGrad = ctx.createRadialGradient(
+          mouse.x,
+          mouse.y,
+          0,
+          mouse.x,
+          mouse.y,
+          200,
+        );
+        glowGrad.addColorStop(0, "rgba(139, 92, 246, 0.3)");
+        glowGrad.addColorStop(0.5, "rgba(96, 165, 250, 0.15)");
+        glowGrad.addColorStop(1, "transparent");
+        ctx.fillStyle = glowGrad;
+        ctx.fillRect(mouse.x - 200, mouse.y - 200, 400, 400);
+      }
+
+      // Update and draw ripples
+      ripplesRef.current = ripplesRef.current.filter((ripple) => {
+        ripple.radius += 3;
+        ripple.alpha -= 0.015;
+
+        if (ripple.alpha > 0 && ripple.radius < ripple.maxRadius) {
+          ctx.beginPath();
+          ctx.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(139, 92, 246, ${ripple.alpha})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(ripple.x, ripple.y, ripple.radius + 5, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(96, 165, 250, ${ripple.alpha * 0.5})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          return true;
+        }
+        return false;
+      });
 
       rafRef.current = requestAnimationFrame(draw);
     }
@@ -244,6 +221,8 @@ export function WaterBackground() {
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (mouseTimeout) clearTimeout(mouseTimeout);
     };
   }, []);
 

@@ -6,3 +6,5 @@ export { ErrorBanner } from "./ErrorBanner";
 export { Layout } from "./Layout";
 export { CursorTrail } from "./CursorTrail";
 export { WaterBackground } from "./WaterBackground";
+export { ThemeToggle } from "./ThemeToggle";
+export { SettingsPanel } from "./SettingsPanel";

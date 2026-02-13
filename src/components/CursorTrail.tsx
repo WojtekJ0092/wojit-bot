@@ -70,11 +70,18 @@ export function CursorTrail() {
         const midX = (curr.x + next.x) / 2;
         const midY = (curr.y + next.y) / 2;
 
+        // Use warm colors (opposite of cool blue/purple background)
+        // Create a wave-like effect with color variation
+        const colorPhase = (i / pts.length) * Math.PI * 2;
+        const r = Math.floor(255 * (0.8 + 0.2 * Math.sin(colorPhase)));
+        const g = Math.floor(180 * (0.7 + 0.3 * Math.sin(colorPhase + 1)));
+        const b = Math.floor(50 * (0.5 + 0.5 * Math.sin(colorPhase + 2)));
+
         ctx.beginPath();
         ctx.moveTo((prev.x + curr.x) / 2, (prev.y + curr.y) / 2);
         ctx.quadraticCurveTo(curr.x, curr.y, midX, midY);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.5})`;
-        ctx.lineWidth = 4.5;
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.7})`;
+        ctx.lineWidth = 5;
         ctx.stroke();
       }
 

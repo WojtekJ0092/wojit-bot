@@ -3,7 +3,56 @@
 // ---------------------------------------------------------------------------
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import type { Filters, Taxonomy } from "@/api";
+
+/** Map country codes to ISO 3166-1 alpha-2 for flag CDN */
+const FLAG_CODES: Record<string, string> = {
+  PL: "pl",
+  UK: "gb",
+  DE: "de",
+  FR: "fr",
+  ES: "es",
+};
+
+/** Map school types to emojis */
+const SCHOOL_TYPE_EMOJIS: Record<string, string> = {
+  public: "🏫",
+  private: "🎓",
+  technical: "⚙️",
+  military: "🪖",
+  SEN: "❤️",
+  home: "🏠",
+  christian: "✝️",
+};
+
+/** Render country code with a real flag image */
+function CountryLabel({ code }: { code: string }) {
+  const isoCode = FLAG_CODES[code.toUpperCase()] ?? code.toLowerCase();
+  return (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+      <img
+        src={`https://flagcdn.com/w40/${isoCode}.png`}
+        alt={`${code} flag`}
+        width={20}
+        height={15}
+        style={{ borderRadius: "2px", objectFit: "cover" }}
+      />
+      {code}
+    </span>
+  );
+}
+
+/** Render school type with emoji */
+function SchoolTypeLabel({ type }: { type: string }) {
+  const emoji = SCHOOL_TYPE_EMOJIS[type] ?? "🏫";
+  return (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+      <span style={{ fontSize: "1.1em" }}>{emoji}</span>
+      {type}
+    </span>
+  );
+}
 
 interface FilterBarProps {
   taxonomy: Taxonomy | null;
@@ -20,10 +69,11 @@ interface DropdownProps {
   selected: string[];
   onToggle: (value: string) => void;
   disabled?: boolean;
+  renderOption?: (value: string) => ReactNode;
   displayFn?: (value: string) => string;
 }
 
-function Dropdown({ label, options, selected, onToggle, disabled, displayFn }: DropdownProps) {
+function Dropdown({ label, options, selected, onToggle, disabled, renderOption, displayFn }: DropdownProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -69,7 +119,7 @@ function Dropdown({ label, options, selected, onToggle, disabled, displayFn }: D
                   onClick={() => onToggle(opt)}
                 >
                   <span className="dropdown__check">{isSelected ? "✓" : ""}</span>
-                  {display(opt)}
+                  {renderOption ? renderOption(opt) : display(opt)}
                 </button>
               </li>
             );
@@ -115,6 +165,7 @@ export function FilterBar({ taxonomy, filters, onChange, disabled }: FilterBarPr
         selected={filters.country}
         onToggle={(v) => toggle("country", v)}
         disabled={disabled}
+        renderOption={(v) => <CountryLabel code={v} />}
       />
       <Dropdown
         label="School type"
@@ -122,6 +173,7 @@ export function FilterBar({ taxonomy, filters, onChange, disabled }: FilterBarPr
         selected={filters.school_type}
         onToggle={(v) => toggle("school_type", v)}
         disabled={disabled}
+        renderOption={(v) => <SchoolTypeLabel type={v} />}
       />
       <Dropdown
         label="Cohort year"

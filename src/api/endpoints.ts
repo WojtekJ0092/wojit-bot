@@ -15,14 +15,19 @@ import type {
 
 // ---- Fixture imports (tree-shaken in production when not used) -------------
 import taxonomyFixture from "@/fixtures/taxonomy.json";
-import searchFixture from "@/fixtures/search.json";
-import answerFixture from "@/fixtures/answer.json";
+import searchPool from "@/fixtures/search-pool.json";
+import answersPool from "@/fixtures/answers-pool.json";
 
 const USE_FIXTURES = import.meta.env.VITE_USE_FIXTURES === "true";
 
 /** Simulate network latency in fixture mode. */
 function fakeDelay(ms = 400): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+/** Pick a random element from an array. */
+function pickRandom<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)]!;
 }
 
 /** GET /api/search */
@@ -33,7 +38,7 @@ export async function fetchSearch(
   if (USE_FIXTURES) {
     await fakeDelay();
     signal?.throwIfAborted();
-    return searchFixture as SearchResponse;
+    return pickRandom(searchPool) as SearchResponse;
   }
   return apiGet<SearchResponse>(
     "/api/search",
@@ -58,7 +63,7 @@ export async function fetchAnswer(
   if (USE_FIXTURES) {
     await fakeDelay(800);
     signal?.throwIfAborted();
-    return answerFixture as AnswerResponse;
+    return pickRandom(answersPool) as AnswerResponse;
   }
   const body: AnswerRequest = { query, filters, stream: false };
   return apiPost<AnswerResponse>("/api/answer", body, signal);

@@ -1,0 +1,72 @@
+[
+  {
+    "total_matches": 27,
+    "distinct_interviews": 12,
+    "items": [
+      { "chunk_id": "c_8f12", "snippet": "Projects feel meaningful; homework repeats the same pattern every week.", "ts_start": "00:08:17", "ts_end": "00:09:05", "score": 0.83 },
+      { "chunk_id": "c_a9de", "snippet": "I prefer when we do something practical, not just answering questions from the textbook.", "ts_start": "00:04:09", "ts_end": "00:04:55", "score": 0.79 },
+      { "chunk_id": "c_b3f1", "snippet": "Group projects are nice because you can share ideas and divide work.", "ts_start": "00:12:30", "ts_end": "00:13:10", "score": 0.74 }
+    ],
+    "cursor": null
+  },
+  {
+    "total_matches": 41,
+    "distinct_interviews": 18,
+    "items": [
+      { "chunk_id": "c_d421", "snippet": "Working in groups makes class way more fun, especially when we get to pick our own teams.", "ts_start": "00:02:30", "ts_end": "00:03:15", "score": 0.88 },
+      { "chunk_id": "c_e5f6", "snippet": "I get nervous presenting but I think it helps me be more confident over time.", "ts_start": "00:11:44", "ts_end": "00:12:38", "score": 0.82 },
+      { "chunk_id": "c_77a3", "snippet": "Some kids don't do their share in group work and that's really frustrating.", "ts_start": "00:06:02", "ts_end": "00:06:50", "score": 0.76 }
+    ],
+    "cursor": null
+  },
+  {
+    "total_matches": 33,
+    "distinct_interviews": 15,
+    "items": [
+      { "chunk_id": "c_1bc9", "snippet": "The workshops are the best part. You actually build things and see how they work.", "ts_start": "00:15:20", "ts_end": "00:16:10", "score": 0.91 },
+      { "chunk_id": "c_3df0", "snippet": "Theory lessons can be boring but I understand why we need them for the exams.", "ts_start": "00:07:45", "ts_end": "00:08:30", "score": 0.77 },
+      { "chunk_id": "c_h2k4", "snippet": "My favourite class is the one where we design circuits. It feels like real engineering.", "ts_start": "00:20:10", "ts_end": "00:21:00", "score": 0.73 }
+    ],
+    "cursor": null
+  },
+  {
+    "total_matches": 22,
+    "distinct_interviews": 10,
+    "items": [
+      { "chunk_id": "c_4ae2", "snippet": "The language apps are cool but my eyes get tired after using them for too long.", "ts_start": "00:03:55", "ts_end": "00:04:40", "score": 0.85 },
+      { "chunk_id": "c_5bf3", "snippet": "I like real books better. You can highlight things and flip back easily.", "ts_start": "00:09:12", "ts_end": "00:10:01", "score": 0.80 },
+      { "chunk_id": "c_6cg4", "snippet": "We use tablets every day now. It's convenient but sometimes the wifi doesn't work.", "ts_start": "00:14:28", "ts_end": "00:15:15", "score": 0.71 }
+    ],
+    "cursor": null
+  },
+  {
+    "total_matches": 19,
+    "distinct_interviews": 8,
+    "items": [
+      { "chunk_id": "c_7dh5", "snippet": "The routine was hard at first but now I actually like having a clear schedule.", "ts_start": "00:01:10", "ts_end": "00:02:05", "score": 0.86 },
+      { "chunk_id": "c_8ei6", "snippet": "Discipline teaches you to focus. I think I'm better at studying because of it.", "ts_start": "00:05:33", "ts_end": "00:06:20", "score": 0.78 },
+      { "chunk_id": "c_j3m5", "snippet": "Some rules feel unnecessary but overall the structure helps me manage my time.", "ts_start": "00:17:00", "ts_end": "00:17:50", "score": 0.72 }
+    ],
+    "cursor": null
+  },
+  {
+    "total_matches": 38,
+    "distinct_interviews": 16,
+    "items": [
+      { "chunk_id": "c_9fj7", "snippet": "Exam stress is real. Sometimes I can't sleep the night before a big test.", "ts_start": "00:10:05", "ts_end": "00:11:00", "score": 0.90 },
+      { "chunk_id": "c_0gk8", "snippet": "Study groups really help because you can explain things to each other.", "ts_start": "00:18:22", "ts_end": "00:19:15", "score": 0.84 },
+      { "chunk_id": "c_1hl9", "snippet": "My teacher gives us a revision plan and that makes it less overwhelming.", "ts_start": "00:13:40", "ts_end": "00:14:30", "score": 0.79 }
+    ],
+    "cursor": null
+  },
+  {
+    "total_matches": 52,
+    "distinct_interviews": 23,
+    "items": [
+      { "chunk_id": "c_6mq4", "snippet": "I was really scared on the first day. Everything was so big and different.", "ts_start": "00:00:45", "ts_end": "00:01:30", "score": 0.92 },
+      { "chunk_id": "c_7nr5", "snippet": "Making new friends was hard but after a few weeks it got better.", "ts_start": "00:03:20", "ts_end": "00:04:10", "score": 0.87 },
+      { "chunk_id": "c_8os6", "snippet": "The homework is way more than primary school. I had to learn how to plan my time.", "ts_start": "00:22:05", "ts_end": "00:22:55", "score": 0.81 }
+    ],
+    "cursor": null
+  }
+]
