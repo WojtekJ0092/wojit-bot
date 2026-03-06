@@ -8,3 +8,5 @@ export { CursorTrail } from "./CursorTrail";
 export { WaterBackground } from "./WaterBackground";
 export { ThemeToggle } from "./ThemeToggle";
 export { SettingsPanel } from "./SettingsPanel";
+export { NewsPanel } from "./NewsPanel";
+export { NukeEgg } from "./NukeEgg";

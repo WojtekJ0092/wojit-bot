@@ -23,6 +23,7 @@
     "noUncheckedIndexedAccess": true,
 
     /* Paths */
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

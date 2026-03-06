@@ -24,21 +24,21 @@ interface Ripple {
   alpha: number;
 }
 
-const PARTICLE_COUNT = 80;
+const PARTICLE_COUNT = 100;
 
 function createParticle(w: number, h: number): Particle {
   const x = Math.random() * w;
   const y = Math.random() * h;
-  const colors = ["#60a5fa", "#8b5cf6", "#a78bfa", "#c4b5fd", "#e0e7ff"];
+  const colors = ["#60a5fa", "#8b5cf6", "#a78bfa", "#c4b5fd", "#e0e7ff", "#f0abfc", "#818cf8", "#93c5fd"];
   return {
     x,
     y,
     baseX: x,
     baseY: y,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5,
-    size: 2 + Math.random() * 3,
-    opacity: 0.3 + Math.random() * 0.5,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    size: 1.5 + Math.random() * 3,
+    opacity: 0.2 + Math.random() * 0.6,
     color: colors[Math.floor(Math.random() * colors.length)]!,
   };
 }
@@ -145,11 +145,26 @@ export function WaterBackground() {
         p.x = p.baseX + offsetX;
         p.y = p.baseY + offsetY;
 
-        // Draw particle
+        // Twinkle effect
+        const twinkle = 0.5 + 0.5 * Math.sin(time * 0.02 + p.baseX * 0.01 + p.baseY * 0.01);
+        const alpha = p.opacity * twinkle;
+
+        // Draw glow
+        const glowSize = p.size * 3;
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
+        glow.addColorStop(0, p.color);
+        glow.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, glowSize, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.globalAlpha = alpha * 0.3;
+        ctx.fill();
+
+        // Draw particle core
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.opacity;
+        ctx.globalAlpha = alpha;
         ctx.fill();
 
         // Draw connection lines to nearby particles
@@ -159,13 +174,13 @@ export function WaterBackground() {
           const dy2 = p.y - other.y;
           const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
 
-          if (dist2 < 80) {
+          if (dist2 < 100) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(other.x, other.y);
             ctx.strokeStyle = p.color;
-            ctx.globalAlpha = (1 - dist2 / 80) * 0.15;
-            ctx.lineWidth = 1;
+            ctx.globalAlpha = (1 - dist2 / 100) * 0.12;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }

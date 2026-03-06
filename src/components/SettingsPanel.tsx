@@ -5,6 +5,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type SpeedMode = "fast" | "normal" | "slow" | "kubica";
+export type ToneMode = "technical" | "friendly";
 type Theme = "light" | "dark";
 
 /** Spawn an F1 car that zooms across the screen */
@@ -33,14 +34,24 @@ function getStoredSpeed(): SpeedMode {
   return "normal";
 }
 
-interface SettingsPanelProps {
-  onSpeedChange: (speed: SpeedMode) => void;
+function getStoredTone(): ToneMode {
+  try {
+    const stored = localStorage.getItem("wojit-tone");
+    if (stored === "technical" || stored === "friendly") return stored;
+  } catch { /* ignore */ }
+  return "technical";
 }
 
-export function SettingsPanel({ onSpeedChange }: SettingsPanelProps) {
+interface SettingsPanelProps {
+  onSpeedChange: (speed: SpeedMode) => void;
+  onToneChange: (tone: ToneMode) => void;
+}
+
+export function SettingsPanel({ onSpeedChange, onToneChange }: SettingsPanelProps) {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>(getStoredTheme);
   const [speed, setSpeed] = useState<SpeedMode>(getStoredSpeed);
+  const [tone, setTone] = useState<ToneMode>(getStoredTone);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Apply theme
@@ -56,9 +67,16 @@ export function SettingsPanel({ onSpeedChange }: SettingsPanelProps) {
     if (speed === "kubica") launchF1Car();
   }, [speed, onSpeedChange]);
 
-  // Emit initial speed on mount
+  // Persist tone & notify parent
+  useEffect(() => {
+    try { localStorage.setItem("wojit-tone", tone); } catch { /* ignore */ }
+    onToneChange(tone);
+  }, [tone, onToneChange]);
+
+  // Emit initial values on mount
   useEffect(() => {
     onSpeedChange(getStoredSpeed());
+    onToneChange(getStoredTone());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -118,6 +136,27 @@ export function SettingsPanel({ onSpeedChange }: SettingsPanelProps) {
                   {s === "slow" ? "🐢" : s === "normal" ? "🚶" : s === "fast" ? "⚡" : "🏎️"} {s === "kubica" ? "Robert Kubica" : s}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Tone row */}
+          <div className="settings__row">
+            <span className="settings__label">Tone</span>
+            <div className="settings__speed-buttons">
+              <button
+                type="button"
+                className={`settings__speed-btn ${tone === "technical" ? "settings__speed-btn--active" : ""}`}
+                onClick={() => setTone("technical")}
+              >
+                🔬 Technical
+              </button>
+              <button
+                type="button"
+                className={`settings__speed-btn ${tone === "friendly" ? "settings__speed-btn--active" : ""}`}
+                onClick={() => setTone("friendly")}
+              >
+                💬 Friendly
+              </button>
             </div>
           </div>
         </div>

@@ -11,5 +11,12 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    proxy: {
+      "/api/news": {
+        target: "https://api.rss2json.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/news/, "/v1/api.json"),
+      },
+    },
   },
 });
