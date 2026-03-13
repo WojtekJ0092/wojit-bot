@@ -2,7 +2,7 @@
 // SourcesDrawer — collapsible "Show sources" panel
 // ---------------------------------------------------------------------------
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Citation } from "@/api";
 import { makePseudonym } from "@/utils/pseudonym";
 
@@ -12,6 +12,25 @@ interface SourcesDrawerProps {
 
 export function SourcesDrawer({ citations }: SourcesDrawerProps) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    }
+
+    function closeFromAppEvent() {
+      setOpen(false);
+    }
+
+    document.addEventListener("keydown", handleKey);
+    document.addEventListener("app:close-overlays", closeFromAppEvent as EventListener);
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.removeEventListener("app:close-overlays", closeFromAppEvent as EventListener);
+    };
+  }, []);
 
   if (citations.length === 0) return null;
 

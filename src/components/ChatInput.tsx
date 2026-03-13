@@ -27,6 +27,7 @@ export function ChatInput({
   return (
     <form className="chat-input" onSubmit={handleSubmit}>
       <input
+        id="chat-input-field"
         className="chat-input__field"
         type="text"
         value={value}

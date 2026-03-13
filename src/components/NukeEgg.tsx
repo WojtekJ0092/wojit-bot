@@ -15,10 +15,10 @@ export function NukeEgg() {
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (active) return;
-      if (e.key !== "n" && e.key !== "N") return;
       // Ignore if user is typing in an input/textarea
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (e.key !== "n" && e.key !== "N") return;
 
       const now = Date.now();
       timestamps.current.push(now);

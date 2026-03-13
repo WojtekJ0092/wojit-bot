@@ -8,12 +8,71 @@ import type { Filters, Taxonomy } from "@/api";
 
 /** Map country codes to ISO 3166-1 alpha-2 for flag CDN */
 const FLAG_CODES: Record<string, string> = {
-  PL: "pl",
   UK: "gb",
+  US: "us",
+  CA: "ca",
+  MX: "mx",
+  BR: "br",
+  AR: "ar",
+  CL: "cl",
+  CO: "co",
+  PE: "pe",
+  VE: "ve",
   DE: "de",
   FR: "fr",
   ES: "es",
+  IT: "it",
+  NL: "nl",
+  BE: "be",
+  CH: "ch",
+  AT: "at",
+  SE: "se",
+  NO: "no",
+  DK: "dk",
+  FI: "fi",
+  PL: "pl",
+  CZ: "cz",
+  PT: "pt",
+  IE: "ie",
+  GR: "gr",
+  RO: "ro",
+  HU: "hu",
+  UA: "ua",
+  TR: "tr",
+  RU: "ru",
+  SA: "sa",
+  AE: "ae",
+  IL: "il",
+  EG: "eg",
+  MA: "ma",
+  NG: "ng",
+  KE: "ke",
+  ZA: "za",
+  IN: "in",
+  CN: "cn",
+  JP: "jp",
+  KR: "kr",
+  SG: "sg",
+  MY: "my",
+  TH: "th",
+  VN: "vn",
+  PH: "ph",
+  ID: "id",
+  AU: "au",
+  NZ: "nz",
+  PK: "pk",
+  BD: "bd",
+  LK: "lk",
 };
+
+const POPULAR_COUNTRY_CODES = [
+  "UK", "US", "CA", "MX", "BR", "AR", "CL", "CO", "PE", "VE",
+  "DE", "FR", "ES", "IT", "NL", "BE", "CH", "AT", "SE", "NO",
+  "DK", "FI", "PL", "CZ", "PT", "IE", "GR", "RO", "HU", "UA",
+  "TR", "RU", "SA", "AE", "IL", "EG", "MA", "NG", "KE", "ZA",
+  "IN", "CN", "JP", "KR", "SG", "MY", "TH", "VN", "PH", "ID",
+  "AU", "NZ", "PK", "BD", "LK",
+] as const;
 
 /** Map school types to emojis */
 const SCHOOL_TYPE_EMOJIS: Record<string, string> = {
@@ -157,11 +216,16 @@ export function FilterBar({ taxonomy, filters, onChange, disabled }: FilterBarPr
     return <div className="filter-bar filter-bar--loading">Loading filters…</div>;
   }
 
+  const countryOptions = [
+    ...POPULAR_COUNTRY_CODES,
+    ...taxonomy.country.map((c) => c.toUpperCase()),
+  ].filter((code, idx, arr) => arr.indexOf(code) === idx);
+
   return (
     <div className="filter-bar">
       <Dropdown
         label="Country"
-        options={taxonomy.country}
+        options={countryOptions}
         selected={filters.country}
         onToggle={(v) => toggle("country", v)}
         disabled={disabled}

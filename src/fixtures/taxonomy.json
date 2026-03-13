@@ -1,5 +1,12 @@
 {
-  "country": ["PL", "UK", "DE", "FR", "ES"],
+  "country": [
+    "UK", "US", "CA", "MX", "BR", "AR", "CL", "CO", "PE", "VE",
+    "DE", "FR", "ES", "IT", "NL", "BE", "CH", "AT", "SE", "NO",
+    "DK", "FI", "PL", "CZ", "PT", "IE", "GR", "RO", "HU", "UA",
+    "TR", "RU", "SA", "AE", "IL", "EG", "MA", "NG", "KE", "ZA",
+    "IN", "CN", "JP", "KR", "SG", "MY", "TH", "VN", "PH", "ID",
+    "AU", "NZ", "PK", "BD", "LK"
+  ],
   "school_type": ["public", "private", "technical", "military", "SEN", "home", "christian"],
   "cohort_year": [1, 2, 3, 4]
 }
