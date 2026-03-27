@@ -10,3 +10,5 @@ export { ThemeToggle } from "./ThemeToggle";
 export { SettingsPanel } from "./SettingsPanel";
 export { NewsPanel } from "./NewsPanel";
 export { NukeEgg } from "./NukeEgg";
+export { GateGame } from "./GateGame";
+export { SkiParkMap3D } from "./SkiParkMap3D";
