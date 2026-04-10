@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 960" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7eb6f1" />
+      <stop offset="58%" stop-color="#a6ccf5" />
+      <stop offset="100%" stop-color="#e4f3ff" />
+    </linearGradient>
+    <linearGradient id="mountainLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3f8ff" />
+      <stop offset="100%" stop-color="#b7cee6" />
+    </linearGradient>
+    <linearGradient id="mountainShade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d8e6f5" />
+      <stop offset="100%" stop-color="#8ea7c0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="960" fill="url(#sky)" />
+
+  <path d="M0 620 L170 430 L260 490 L400 280 L560 500 L720 360 L900 610 L0 960 Z" fill="url(#mountainShade)" />
+  <path d="M190 620 L390 260 L525 490 L660 345 L820 590 L1020 390 L1180 610 Z" fill="url(#mountainLight)" />
+  <path d="M620 660 L860 280 L1030 550 L1220 320 L1390 620 L1600 380 L1820 640 L1920 960 L620 960 Z" fill="url(#mountainShade)" />
+  <path d="M950 670 L1180 300 L1360 580 L1550 350 L1740 620 L1920 430 L1920 960 L950 960 Z" fill="url(#mountainLight)" opacity="0.95" />
+
+  <ellipse cx="960" cy="900" rx="1300" ry="220" fill="#f6fbff" />
+</svg>
